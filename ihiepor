@@ -1,0 +1,89 @@
+FEAP * * Jean Micheal problem
+  0 0 0 3 1 8
+
+PARA	
+   m=10
+   n=10
+   o=2
+
+PARA	
+  xo = 0.0
+  yo = 0.0
+  zo = 0.0
+
+PARA	
+  lo = 10	!0.1
+  bo = 5	!0.1
+  ho = 1	!0.1  
+  
+PARA	
+  q=1
+  t=1
+  to=0   
+
+MATE 1
+  THERmal
+  FOURIER ISOTROPIC 1000 1074
+  DENSITY MASS 1682
+
+Mate 2  
+  CONVection
+  SURF yo+bo to
+  EXPOnent 4		
+  
+BLOC
+  cart m n o 0 0 1 10
+  1 xo     yo     zo
+  2 xo+lo  yo     zo
+  3 xo+lo  yo+bo  zo
+  4 xo     yo+bo  zo
+  5 xo     yo     zo+ho
+  6 xo+lo  yo     zo+ho
+  7 xo+lo  yo+bo  zo+ho
+  8 xo     yo+bo  zo+ho
+  
+BLOC 2
+  cart m o 0 0 2 0 0
+  1 xo     yo+bo  zo
+  2 xo+lo  yo+bo  zo
+  3 xo+lo  yo+bo  zo+ho
+  4 xo     yo+bo  zo+ho 
+
+ebou
+  1 xo 1
+  1 xo+lo 1 
+  
+!edis
+!  1 xo 2 
+  
+CSUR
+  flux
+  surf
+  1 xo     yo  zo    10000
+  2 xo+lo  yo  zo    10000
+  3 xo+lo  yo  zo+ho 10000
+  4 xo     yo  zo+ho 10000  
+  
+END 
+
+!-----------------------end of mesh----------------------------------------
+
+ORDEr
+ 1 
+
+BATC  
+  dt,,0.01
+  tran back
+  loop,,100
+   time
+   loop,,20
+      tang,,1
+    next
+  next
+END
+
+Inte
+stop
+
+
+
